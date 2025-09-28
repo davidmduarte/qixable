@@ -6,7 +6,8 @@ typedef struct {
 	int selectedOp;
 	char ops[5][50];
 	int selectedCat;
-	char cats[2][50];
+	char cats[10][50];
+	int catsLen;
 } Menu;
 
 Menu MenuInit();

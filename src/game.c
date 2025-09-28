@@ -6,7 +6,6 @@
 Game GameInit() {
 	Game self;
 
-	printf("TOU AQUI\n");
 	self.init = 1;
 	self.curLevel = 0;
 

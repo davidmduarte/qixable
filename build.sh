@@ -20,8 +20,7 @@ printf "\tCopying exe and assets to dist folder..\n"
 
 mkdir -p dist
 cp build/$exeName dist/
-cp assets/*.png dist/
-cp -R assets/categories/ dist/
+cp -R assets/* dist/
 
 printf "\tDone!\n"
 
