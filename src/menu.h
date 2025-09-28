@@ -1,0 +1,15 @@
+#ifndef __MENU__
+#define __MENU__
+
+typedef struct {
+	int init;
+	int selectedOp;
+	char ops[5][50];
+	int selectedCat;
+	char cats[2][50];
+} Menu;
+
+Menu MenuInit();
+int MenuRender(Menu *self);
+
+#endif
