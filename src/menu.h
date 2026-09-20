@@ -4,7 +4,7 @@
 typedef struct {
 	int init;
 	int selectedOp;
-	char ops[5][50];
+	char ops[5][100];
 	int selectedCat;
 	char cats[10][50];
 	int catsLen;

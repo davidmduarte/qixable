@@ -36,10 +36,13 @@ typedef struct {
 	unsigned int path[4000];
 	unsigned int pathIdx;
 	int __X, __Y;
+	int dir, lastDir;
+	unsigned int lives;
 } Game;
 
 Game GameInit();
 int GameRender(Game *self);
+void GameRenderInit(Game *self, int *gameOver);
 void DrawPlayer(int x, int y);
 void InitEnemy(Enemy *e);
 int DrawEnemy(Game *self, Enemy *e);
@@ -50,7 +53,9 @@ void InitPixels(Game *self);
 void ClearAreaActions(Game *self);
 Vector2 ClearArea(Game *self, int x, int y, unsigned int cnt);
 int PointsInSamePlan(Game *self);
+int InsidePath(Game *self, unsigned int offset);
 void AddNumberToArray(Game *self, unsigned int o);
+void RemoveNumberFromArray(Game *self);
 void SetBorders(Game *self);
 void SetColor(Color *pixels, unsigned int offset, unsigned char r, unsigned char g, unsigned char b, unsigned char a);
 int IsColor(Color *pixels, unsigned int offset, unsigned char r, unsigned char g, unsigned char b, unsigned char a);

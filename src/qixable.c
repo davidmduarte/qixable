@@ -17,7 +17,7 @@ int main() {
 	menu.init = 0;
 	game.init = 0;
 
-	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Vacation Game");
+	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Qixable Game");
 	SetTargetFPS(120);
 
 	while(! WindowShouldClose()) {
@@ -48,7 +48,7 @@ int main() {
 			case 6:
 				quit = 1;
 				break;
-
+		  
 		}
 
 		if(quit == 1) break;

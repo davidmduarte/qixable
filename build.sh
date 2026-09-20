@@ -10,7 +10,14 @@ if [ "$platform" = "Darwin" ]; then
     printf "\tPlatform: %s\n" "$platform"
     printf "\tCompiling ... \n"
     mkdir -p build
-    gcc -o build/$exeName $srcFiles -O2 -lraylib -std=c99 -Wall
+    tcc -o build/$exeName $srcFiles -O2 -lraylib -std=c99 -Wall
+
+elif [ "$platform" = "Linux" ]; then
+    printf "\tPlatform: %s\n" "$platform"
+    printf "\tCompiling ... \n"
+    mkdir -p build
+    tcc -o build/$exeName $srcFiles -O2 -std=c99 -Wall -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+		 
 else
     printf "\n\tThe %s Platform, is not supported\n" "$platform"
     exit 1
