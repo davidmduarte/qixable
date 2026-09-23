@@ -42,6 +42,7 @@ typedef struct {
 
 Game GameInit();
 int GameRender(Game *self);
+void GameUnload(Game *self);
 void GameRenderInit(Game *self, int *gameOver);
 void DrawPlayer(int x, int y);
 void InitEnemy(Enemy *e);

@@ -58,6 +58,7 @@ int main() {
 		EndDrawing();
 	}
 
+	GameUnload(&game);
 	CloseWindow();
 
 	return 0;

@@ -31,4 +31,7 @@ cp -R assets/* dist/
 
 printf "\tDone!\n"
 
+sourceLines=$(cat src/*.c src/*.h | wc -l)
+printf "\tSource lines: %s\n" "$sourceLines"
+
 printf "\n"

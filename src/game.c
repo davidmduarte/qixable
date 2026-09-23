@@ -1,7 +1,7 @@
 /*
  	TODO:
  	- Na construção de linha se o user parar não acontece nada portanto o user pode parar
- 	- 	Se o user tentar voltar para traz, ele pode andar para tras mas é preciso apagar a linha que ja foi escrita para a frente
+ 	x 	Se o user tentar voltar para traz, ele pode andar para tras mas é preciso apagar a linha que ja foi escrita para a frente
  	- 	Se o um enimigo colidir com o user ou com a linha que o user está a construir então o user perde uma vida e a linha que ele está a construir é destruida
 	-	Se o user tentar crusar pro cima da linha que está a ser construida por ele ele perder uma vida e a linha que ele está a construir é destruida
 	-   Se o user levantar a tecla que premite dezenhar uma linha livremente essa linha deve desaparecer e o user volta ao ponto de partida
@@ -34,6 +34,34 @@ Game GameInit() {
 	self.lastDir = STOP;
 
 	return self;
+}
+
+void GameUnload(Game *self) {
+	int i;
+
+	if(self->pixels != NULL) {
+		UnloadImageColors(self->pixels);
+		self->pixels = NULL;
+	}
+
+	if(self->tex.id != 0) {
+		UnloadTexture(self->tex);
+		self->tex.id = 0;
+	}
+
+	if(self->img.data != NULL) {
+		UnloadImage(self->img);
+		self->img.data = NULL;
+	}
+
+	for(i = 0; i < 3; i++) {
+		if(self->levelTex[i].id != 0) {
+			UnloadTexture(self->levelTex[i]);
+			self->levelTex[i].id = 0;
+		}
+	}
+
+	self->init = 0;
 }
 
 int GameRender(Game *self) {
