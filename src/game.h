@@ -38,6 +38,9 @@ typedef struct {
 	int __X, __Y;
 	int dir, lastDir;
 	unsigned int lives;
+	int drawActive;
+	int drawLocked;
+	int drawStartX, drawStartY;
 } Game;
 
 Game GameInit();
@@ -52,7 +55,7 @@ int OutOfXBounds(Game * self, int x, unsigned int offset);
 void MovePlayer(Game *self, int dir, int free, int debugKey);
 void InitPixels(Game *self);
 void ClearAreaActions(Game *self);
-Vector2 ClearArea(Game *self, int x, int y, unsigned int cnt);
+void ClearArea(Game *self, int x, int y);
 int PointsInSamePlan(Game *self);
 int InsidePath(Game *self, unsigned int offset);
 void AddNumberToArray(Game *self, unsigned int o);
