@@ -6,6 +6,8 @@
 	-	Se o user tentar crusar pro cima da linha que está a ser construida por ele ele perder uma vida e a linha que ele está a construir é destruida
 	-   Se o user levantar a tecla que premite dezenhar uma linha livremente essa linha deve desaparecer e o user volta ao ponto de partida
 	-   Quando uma linha livre é concluida mesmo que o user continue a carregar na tecla de criar na tecla de crias linhas livres a mesma não devera funcionar até que o user deixe de pressionar e volte a pressionar a tecla
+	- Quando se limpa a area, deve deve haver uma curta animação visual de fading ou outra qualquer para que seja notório o que acabou de acontecer
+	- Fazer refactor do "limpar area para que deixe de ser uma função recursiva
  */
 
 #include <stdio.h>
@@ -340,7 +342,6 @@ void MovePlayer(Game *self, int dir, int free, int debugKey)
 			offset = y * (int)self->s.x + (x - 1);
 			if(OutOfXBounds(self, (x - 1), offset)) ClearAreaActions(self);
 			else {
-				printf("InXBounds\n");
 				if(! IsColor(self->pixels, offset, 230, 41, 55, 255)) {
 					AddNumberToArray(self, offset);
 					SetColor(self->pixels, offset, 230, 41, 55, 255);
@@ -380,113 +381,7 @@ void MovePlayer(Game *self, int dir, int free, int debugKey)
 
 				self->plx++;
 			}
-		}
-
-		
-		/*
-		switch(dir) {
-		case UP:
-			offset0 = y * (int)self->s.x + x;
-			offset = (y - 1) * (int)self->s.x + x;
-			if(OutOfYBounds(self, (y - 1), offset)) ClearAreaActions(self);
-			else {
-				if(! IsColor(self->pixels, offset, 230, 41, 55, 255)) {
-					AddNumberToArray(self, offset);
-					SetColor(self->pixels, offset, 230, 41, 55, 255);
-					if(self->invPoint.x == -1) {
-						AddNumberToArray(self, offset0);
-						self->invPoint.x = x + 1;
-						self->invPoint.y = y - 1;
-						self->invPointAxis = 'x';
-						self->invPointStep = -2;
-					}
-					
-				} else if(InsidePath(self, offset)) {
-					RemoveNumberFromArray(self);
-					SetColor(self->pixels, offset0, BLUE.r, BLUE.g, BLUE.b, 255);
-				}
-
-				self->ply--;
-			}
-			break;
-		case DOWN:
-			offset0 = y * (int)self->s.x + x;
-			offset = (y + 1) * (int)self->s.x + x;
-			if(OutOfYBounds(self, (y + 1), offset)) ClearAreaActions(self);
-			else {
-				if(! IsColor(self->pixels, offset, 230, 41, 55, 255)) {
-					AddNumberToArray(self, offset);
-					SetColor(self->pixels, offset, 230, 41, 55, 255);
-					if(self->invPoint.x == -1) {
-						AddNumberToArray(self, offset0);
-						self->invPoint.x = x + 1;
-						self->invPoint.y = y + 1;
-						self->invPointAxis = 'x';
-						self->invPointStep = -2;
-					}
-				} else if(InsidePath(self, offset)) {
-					RemoveNumberFromArray(self);
-					SetColor(self->pixels, offset0, BLUE.r, BLUE.g, BLUE.b, 255);
-				}
-
-				self->ply++;
-			}
-			break;
-		case LEFT:
-			offset0 = y * (int)self->s.x + x;
-			offset = y * (int)self->s.x + (x - 1);
-			printf("LEFT\n");
-			if(OutOfXBounds(self, (x - 1), offset)) ClearAreaActions(self);
-			else {
-				printf("InXBounds\n");
-				if(! IsColor(self->pixels, offset, 230, 41, 55, 255)) {
-					printf("Is Not RED Lets put RED\n");
-					AddNumberToArray(self, offset);
-					SetColor(self->pixels, offset, 230, 41, 55, 255);
-					if(self->invPoint.x == -1) {
-						printf("invpoint x -1\n");
-						self->invPoint.x = x - 1;
-						self->invPoint.y = y + 1;
-						self->invPointAxis = 'y';
-						self->invPointStep = -2;
-					}
-				} else if(InsidePath(self, offset)) {
-					printf("Is RED from path\n");
-					RemoveNumberFromArray(self);
-					SetColor(self->pixels, offset0, BLUE.r, BLUE.g, BLUE.b, 255);
-				}
-
-				self->plx--;
-			}
-			printf("---\n");
-			break;
-		case RIGHT:
-			offset0 = y * (int)self->s.x + x;
-			offset = y * (int)self->s.x + (x + 1);
-			if(OutOfXBounds(self, (x + 1), offset)) ClearAreaActions(self);
-			else {
-				if(! IsColor(self->pixels, offset, 230, 41, 55, 255)) {
-					AddNumberToArray(self, offset);
-					SetColor(self->pixels, offset, 230, 41, 55, 255);
-					if(self->invPoint.x == -1) {
-						AddNumberToArray(self, offset0);
-						self->__X = x;
-						self->__Y = y;
-						self->invPoint.x = x + 1;
-						self->invPoint.y = y + 1;
-						self->invPointAxis = 'y';
-						self->invPointStep = -2;
-					}
-				} else if(InsidePath(self, offset)) {
-					RemoveNumberFromArray(self);
-					SetColor(self->pixels, offset0, BLUE.r, BLUE.g, BLUE.b, 255);
-				}
-
-				self->plx++;
-			}
-			break;
-		}
-	*/
+		}		
 	} else {
 		switch(dir) {
 		case UP:
