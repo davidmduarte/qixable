@@ -115,7 +115,7 @@ int GameRender(Game *self) {
 		DrawTextureEx(self->levelTex[self->curLevel], self->p, 0.0, self->scale, WHITE);
 		UpdateTexture(self->tex, self->pixels);
 		DrawTextureEx(self->tex, self->p, 0.0, 1, WHITE);
-		//DrawPlayer(self->plx, self->ply);
+		DrawPlayer(self->plx, self->ply);
 
 		gameOver = DrawEnemy(self, self->enemies);
 
@@ -292,6 +292,98 @@ void MovePlayer(Game *self, int dir, int free, int debugKey)
 	y = self->ply - (int)self->p.y;
 
 	if(free) {
+		offset0 = y * (int)self->s.x + x;
+		if(dir == UP) {
+			offset = (y - 1) * (int)self->s.x + x;
+			if(OutOfYBounds(self, (y - 1), offset)) ClearAreaActions(self);
+			else {
+				if(! IsColor(self->pixels, offset, 230, 41, 55, 255)) {
+					AddNumberToArray(self, offset);
+					SetColor(self->pixels, offset, 230, 41, 55, 255);
+					if(self->invPoint.x == -1) {
+						AddNumberToArray(self, offset0);
+						self->invPoint.x = x + 1;
+						self->invPoint.y = y - 1;
+						self->invPointAxis = 'x';
+						self->invPointStep = -2;
+					}
+					
+				} else if(InsidePath(self, offset)) {
+					RemoveNumberFromArray(self);
+					SetColor(self->pixels, offset0, BLUE.r, BLUE.g, BLUE.b, 255);
+				}
+
+				self->ply--;
+			}
+		} else if(dir == DOWN) {
+			offset = (y + 1) * (int)self->s.x + x;
+			if(OutOfYBounds(self, (y + 1), offset)) ClearAreaActions(self);
+			else {
+				if(! IsColor(self->pixels, offset, 230, 41, 55, 255)) {
+					AddNumberToArray(self, offset);
+					SetColor(self->pixels, offset, 230, 41, 55, 255);
+					if(self->invPoint.x == -1) {
+						AddNumberToArray(self, offset0);
+						self->invPoint.x = x + 1;
+						self->invPoint.y = y + 1;
+						self->invPointAxis = 'x';
+						self->invPointStep = -2;
+					}
+				} else if(InsidePath(self, offset)) {
+					RemoveNumberFromArray(self);
+					SetColor(self->pixels, offset0, BLUE.r, BLUE.g, BLUE.b, 255);
+				}
+
+				self->ply++;
+			}
+		} else if(dir == LEFT) {
+			offset = y * (int)self->s.x + (x - 1);
+			if(OutOfXBounds(self, (x - 1), offset)) ClearAreaActions(self);
+			else {
+				printf("InXBounds\n");
+				if(! IsColor(self->pixels, offset, 230, 41, 55, 255)) {
+					AddNumberToArray(self, offset);
+					SetColor(self->pixels, offset, 230, 41, 55, 255);
+					if(self->invPoint.x == -1) {
+						self->invPoint.x = x - 1;
+						self->invPoint.y = y + 1;
+						self->invPointAxis = 'y';
+						self->invPointStep = -2;
+					}
+				} else if(InsidePath(self, offset)) {
+					RemoveNumberFromArray(self);
+					SetColor(self->pixels, offset0, BLUE.r, BLUE.g, BLUE.b, 255);
+				}
+
+				self->plx--;
+			}
+		} else if(dir == RIGHT) {
+			offset = y * (int)self->s.x + (x + 1);
+			if(OutOfXBounds(self, (x + 1), offset)) ClearAreaActions(self);
+			else {
+				if(! IsColor(self->pixels, offset, 230, 41, 55, 255)) {
+					AddNumberToArray(self, offset);
+					SetColor(self->pixels, offset, 230, 41, 55, 255);
+					if(self->invPoint.x == -1) {
+						AddNumberToArray(self, offset0);
+						self->__X = x;
+						self->__Y = y;
+						self->invPoint.x = x + 1;
+						self->invPoint.y = y + 1;
+						self->invPointAxis = 'y';
+						self->invPointStep = -2;
+					}
+				} else if(InsidePath(self, offset)) {
+					RemoveNumberFromArray(self);
+					SetColor(self->pixels, offset0, BLUE.r, BLUE.g, BLUE.b, 255);
+				}
+
+				self->plx++;
+			}
+		}
+
+		
+		/*
 		switch(dir) {
 		case UP:
 			offset0 = y * (int)self->s.x + x;
@@ -394,6 +486,7 @@ void MovePlayer(Game *self, int dir, int free, int debugKey)
 			}
 			break;
 		}
+	*/
 	} else {
 		switch(dir) {
 		case UP:
